@@ -1,0 +1,47 @@
+alias zshrc="vim ~/.zshrc"
+alias zshrs="source ~/.zshrc"
+alias localip="ifconfig | grep -E \"([0-9]{1,3}\.){3}[0-9]{1,3}\" | grep -v 127.0.0.1 | awk '{ print \$2 }' | cut -f2 -d: | head -n1"
+
+killonport () {
+  lsof -Pi :$1 | awk 'NR>1 { print $2 }' | xargs kill -9
+}
+
+retag() {
+  if [ "$1" = "" ]; then
+    tag=$(gcurtag)
+  else
+    tag=$1
+  fi
+
+  read "REPLY?Recreate tag $tag? y/n (y)"
+
+  if [ "$REPLY" = "y" ] || [ "$REPLY" = "" ]; then
+    echo "remotely deleting $tag tag"
+    git push --delete origin $tag
+    echo "locally deleting $tag tag"
+    git tag -d $tag
+    gtag $tag
+  else
+    echo "Exit"
+  fi
+}
+
+gtag() {
+  echo "creating tag $1"
+  git tag -a $1 -m "$1"
+  echo "pushing tag $1"
+  git push --tags
+  echo "Tag $1 successfully deployed"
+}
+
+gcurbranch() {
+  git rev-parse --abbrev-ref HEAD
+}
+
+gcurtag() {
+  git describe --tags --abbrev=0
+}
+
+glcb() {
+  git pull origin $(gcurbranch)
+}
