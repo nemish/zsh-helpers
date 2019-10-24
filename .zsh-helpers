@@ -1,6 +1,7 @@
 alias zshrc="vim ~/.zshrc"
 alias zshrs="source ~/.zshrc"
 alias localip="ifconfig | grep -E \"([0-9]{1,3}\.){3}[0-9]{1,3}\" | grep -v 127.0.0.1 | awk '{ print \$2 }' | cut -f2 -d: | head -n1"
+alias ghotfix="npm version prerelease && git push --tags"
 
 killonport () {
   lsof -Pi :$1 | awk 'NR>1 { print $2 }' | xargs kill -9
