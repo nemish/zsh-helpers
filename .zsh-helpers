@@ -8,23 +8,37 @@ killonport () {
 }
 
 retag() {
-  if [ "$1" = "" ]; then
+  if [ "$1" = "" ] || [ "$1" = "-f" ]; then
     tag=$(gcurtag)
   else
     tag=$1
   fi
 
-  read "REPLY?Recreate tag $tag? y/n (y)"
+  while [[ "$#" -gt 0 ]]
+  do
+    case $1 in
+      -f)
+        local REPLY="y"
+        ;;
+    esac
+    shift
+  done
+
+  if if [ -z "$REPLY" ]; then
+    read "REPLY?Recreate tag $tag? y/n (y)"
+  fi
+
 
   if [ "$REPLY" = "y" ] || [ "$REPLY" = "" ]; then
     echo "remotely deleting $tag tag"
-    git push --delete origin $tag
+    #git push --delete origin $tag
     echo "locally deleting $tag tag"
-    git tag -d $tag
-    gtag $tag
+    #git tag -d $tag
+    #gtag $tag
   else
     echo "Exit"
   fi
+  unset REPLY
 }
 
 gtag() {
