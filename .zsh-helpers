@@ -31,10 +31,10 @@ retag() {
 
   if [ "$REPLY" = "y" ] || [ "$REPLY" = "" ]; then
     echo "remotely deleting $tag tag"
-    #git push --delete origin $tag
+    git push --delete origin $tag
     echo "locally deleting $tag tag"
-    #git tag -d $tag
-    #gtag $tag
+    git tag -d $tag
+    gtag $tag
   else
     echo "Exit"
   fi
