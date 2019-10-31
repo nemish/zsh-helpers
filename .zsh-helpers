@@ -30,15 +30,20 @@ retag() {
 
 
   if [ "$REPLY" = "y" ] || [ "$REPLY" = "" ]; then
-    echo "remotely deleting $tag tag"
-    git push --delete origin $tag
-    echo "locally deleting $tag tag"
-    git tag -d $tag
+    rmtag $tag
     gtag $tag
   else
     echo "Exit"
   fi
   unset REPLY
+}
+
+rmtag() {
+  tag=$1
+  echo "locally deleting $tag tag"
+  git tag -d $tag
+  echo "remotely deleting $tag tag"
+  git push origin :refs/tags/$tag
 }
 
 gtag() {
