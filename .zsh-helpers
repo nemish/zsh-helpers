@@ -5,6 +5,7 @@ alias ghotfix="npm version prerelease && git push --tags"
 alias dcrkillbc="docker ps | grep bitcasino-v3 | awk '{print $1}' | xargs docker kill"
 alias glom="git pull origin master"
 alias glod="git pull origin develop"
+alias setwd="export PATH=./:$PATH"
 
 killonport () {
   lsof -Pi :$1 | awk 'NR>1 { print $2 }' | xargs kill -9
@@ -56,6 +57,7 @@ gtag() {
   git push --tags
   echo "Tag $1 successfully deployed"
 }
+
 
 gcurbranch() {
   git rev-parse --abbrev-ref HEAD
