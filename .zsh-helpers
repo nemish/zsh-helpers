@@ -5,6 +5,8 @@ alias ghotfix="npm version prerelease && git push --tags"
 alias dcrkillbc="docker ps | grep bitcasino-v3 | awk '{print $1}' | xargs docker kill"
 alias glom="git pull origin master"
 alias glod="git pull origin develop"
+alias gamendm="git commit --amend -m"
+alias gamend="git commit --amend --no-edit"
 alias setwd="export PATH=./:$PATH"
 
 killonport () {
